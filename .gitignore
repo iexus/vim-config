@@ -1,0 +1,13 @@
+*.swp
+*.swo
+*~
+.DS_Store
+.VimballRecord
+.netrwhist
+tags
+tmp
+bundle/*
+!bundle/Vundle.vim
+!bundle/Vundle.vim/*
+plugged/*
+!plugged/.gitkeep
