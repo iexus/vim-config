@@ -10,17 +10,8 @@ Plug 'AdamWhittingham/projector_mode'                         " Toggle between c
 Plug 'airblade/vim-gitgutter'                                 " Show the column of changes to the file against git
 Plug 'vim-airline/vim-airline'                                " Add a nicer status line
 Plug 'vim-airline/vim-airline-themes'                         " Themes for Airline
-Plug 'christoomey/vim-tmux-navigator'                         " Move between Vim panes & Tmux panes easily
 Plug 'lilydjwg/colorizer'                                              " Show the colour off Hex colour codes
-Plug 'luochen1990/rainbow'                                    " Colour in brachets in matching pairs
 Plug 'mhinz/vim-startify'                                     " Start Vim with a more useful start screen
-Plug 'nathanaelkane/vim-indent-guides'                        " Show indentation level guides
-Plug 'regedarek/ZoomWin'                                      " Enable one pane to be fullscreened temporarily
-Plug 'sjl/gundo.vim'                                          " Visualise the undo tree and make it easy to navigate
-Plug 'tpope/vim-repeat'                                       " Make many more operations repeatable with `.`
-
-" Tooling
-Plug 'tpope/vim-dispatch'                                     " Enable async running of tasks
 
 " Search and file exploring
 Plug 'jlanzarotta/bufexplorer'                                " Show a sortable list of open buffers
@@ -32,28 +23,17 @@ Plug 'tpope/vim-unimpaired'                                   " Extra bindings f
 Plug 'timakro/vim-searchant'                                  " Better highlighting when searching in file
 
 " Additional contextual information
-Plug 'AdamWhittingham/vim-copy-filename'                      " Quick shortcuts for copying the file name, path and/or line number
 Plug 'gregsexton/MatchTag'                                    " Highlight the matching opening or closing tag in HTML/XML
 Plug 'ludovicchabant/vim-gutentags'                           " Better automated generation and update of ctags files
 Plug 'tpope/vim-projectionist'                                " Map tools and actions based on the project
+Plug 'andyl/vim-projectionist-elixir'
 
 " Extra text manipulation and movement
-Plug 'AndrewRadev/splitjoin.vim'                              " Quick joining or splitting of programming constructs (ie. `if...else...` to `? ... : ...`)
-Plug 'AndrewRadev/switch.vim'                                 " Quickly switch programming constructs between alternate version (ie. Ruby string to symbol)
-Plug 'godlygeek/tabular'                                      " Format lines into a table
-Plug 'junegunn/vim-easy-align'                                " Fast alignment of lines based on preset rules
-Plug 'kana/vim-textobj-user'                                  " Extend Vims text object
-Plug 'adelarsq/vim-matchit'                                            " Extend % to match more text objects
-Plug 'maxbrunsfeld/vim-yankstack'                             " Paste text, then rotate though things yanked before/after
 Plug 'tpope/vim-commentary'                                   " Quick toggle for code commenting
-Plug 'tpope/vim-abolish'                                      " Allow smartcase substitution and search
 Plug 'tpope/vim-speeddating'                                  " Extend vim increment/decrement to work on dates
 Plug 'tpope/vim-surround'                                     " Quick editing or insertion for surrounding characters (ie. quickly add quotes around a line)
-Plug 'wellle/targets.vim'                                     " Add lots of extra text objects for brachets, quotes, args and more
 
 " Snippets and autocomplete
-Plug 'SirVer/ultisnips'                                       " Add snippet expantion for all kinds of template formats
-Plug 'honza/vim-snippets'                                     " Add many popular shared snippets
 Plug 'tpope/vim-endwise'                                      " Automatically insert programming block endings (ie. `end` in Ruby, `endif` in VimL)
 Plug 'tpope/vim-ragtag'                                       " Provide bindings for closing HTML/XML tags
 Plug 'ajh17/VimCompletesMe'                                   " Very lightweight completion helper
@@ -61,16 +41,12 @@ Plug 'ajh17/VimCompletesMe'                                   " Very lightweight
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
 Plug 'sheerun/vim-polyglot'                                   " Currated group of other excellent plugins
-Plug 'niquola/vim-hl7'                                        " HL7 syntax highlighting
-Plug 'slashmili/alchemist.vim'                                " Hook into Elixir Alchemist server for better completions'
-Plug 'janko-m/vim-test'                                       " Add test running support for lots of languages & test frameworks
 Plug 'elixir-editors/vim-elixir'
 
 " Ruby
 Plug 'tpope/vim-rbenv'                                        " Use rbenv for Ruby tools
 Plug 'ecomba/vim-ruby-refactoring',    {'for': 'ruby'}        " Extra Ruby refactoring tools
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}        " Extend % to match Ruby syntax
-Plug 't9md/vim-ruby-xmpfilter',        {'for': 'ruby'}        " Run the current line of Ruby inside Vim
 
 " Elixir
 Plug 'avdgaag/vim-phoenix',            {'for': 'elixir'}      " Add Projectionist, Dispatch and Mix integrations for Phoenix projects
@@ -78,9 +54,6 @@ Plug 'avdgaag/vim-phoenix',            {'for': 'elixir'}      " Add Projectionis
 " JS, CSS & HTML
 Plug 'cakebaker/scss-syntax.vim'                              " SCSS syntax highlighting
 Plug 'adamwhittingham/vim-comb',       {'do': './install.sh'} " Organise and format CSS selectors like a proper human
-Plug 'digitaltoad/vim-jade',           {'for': 'jade'}        " Jade syntax highlighting
-Plug 'moll/vim-node'                                          " NodeJS syntax support
-
 
 " Load any extra plugins specified in the home directory
 if filereadable(expand("~/.vim.plugins.local"))
@@ -103,14 +76,8 @@ filetype plugin on
 " Setup the leader key, used for triggering all kinds of awesome things
 let mapleader = ","
 
-" Comma has been the leader key for so long, emulate it being the leader still
-" for the sake of muscle memory
-"nmap , <leader>
-"nmap ,, <leader><leader>
-
-
 " Set our primary colorscheme. Override this in ~/.vim.local if you want.
-colorscheme adCode
+colorscheme Tomorrow-Night-Eighties
 
 set autoindent                          " Automatically indent based on syntax detection
 set autowrite                           " Writes on make/shell commands
@@ -178,7 +145,7 @@ set wildignore+=_build/*                                                     " I
 " Configure font & colourscheme
 " ----------------------------------------------
 " Setup the projector toggle plugin
-let g:default_colorscheme = 'adCode'
+let g:default_colorscheme = 'Tomorrow-Night-Eighties'
 let g:projector_colorscheme = 'mac-classic'
 
 " Setup Font
@@ -232,13 +199,6 @@ match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces hi
 highlight BadSpaces term=standout ctermbg=red guibg=red
 match BadSpaces / \+/
 
-
-" -----------------------------------
-" Initialise Plugins
-" -----------------------------------
-
-call yankstack#setup()
-
 " ----------------------------------------------
 " Command Shortcuts
 " ----------------------------------------------
@@ -269,9 +229,6 @@ vnoremap <silent> <Leader>a\| :Tabularize /\|<CR>
 vnoremap <silent> <Leader>a: :Tabularize /\w:\zs/l0l1<CR>
 vnoremap <silent> <Leader>a<space> :Tabularize /[^ ] \+\zs/l0r1<CR>
 
-" Start interactive EasyAlign in visual mode (e.g. vipa)
-vmap a <Plug>(LiveEasyAlign)
-
 "  <Leader>f to fuzzy search files
 map <silent> <leader>f :CtrlP<cr>
 
@@ -281,29 +238,11 @@ map <silent> <leader>F :CtrlPCurFile<cr>
 "  <Leader>} to Search for a tag in the current project
 map <silent> <leader>} :CtrlPTag<cr>
 
-"  <Leader>g to jump to the next change since git commit
-nmap <leader>g <Plug>GitGutterNextHunk
-
-"  <Leader>G to jump to the last change since git commit
-nmap <leader>G <Plug>GitGutterPrevHunk
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
 "  <Leader>gt to toggle the gutter
 nmap <leader>gt :GitGutterToggle<CR>
 
 "  <Leader>gh highlight changed lines
 nmap <leader>gh :GitGutterLineHighlightsToggle<CR>
-
-" <Leager>ga to add the current git hunk to git staging
-nmap <Leader>ga <Plug>GitGutterStageHunk
-
-" <Leader>gu to undo the current changed hunk
-nmap <Leader>gu <Plug>GitGutterUndoHunk
 
 "  <Leader>h to dismiss search result highlighting until next search or press of 'n'
 :noremap <silent> <leader>h :noh<CR>
@@ -341,16 +280,6 @@ nmap <silent> <Leader>sp :setlocal spell!<CR>
 "  <Leader>sw to strip whitespace off the ends
 nmap <silent> <Leader>sw :call StripTrailingWhitespace()<CR>
 
-"  <Leader>t to run all tests in the current file if it is a test, otherwise
-"  run the last test file
-map <silent> <leader>t :TestFile<CR>
-
-"  <Leader>t to run the tests in the scope nearest the cursor
-map <silent> <leader>T :TestNearest<CR>
-
-"  <Leader>u to toggle undo history browser
-nnoremap <Leader>u :GundoToggle<CR>
-
 " Replace the default U (undo last line) to Redo for speedyness
 nmap U <c-r>
 
@@ -385,14 +314,6 @@ nmap <F6> :call VimSyntaxGroups()<CR>
 
 
 " ----------------------------------------------
-" Insert Mode Abbreviations
-" ----------------------------------------------
-
-" Try to auto-complete xml tags on typing '</'
-iabbrev </ </<C-X><C-O>
-
-
-" ----------------------------------------------
 " Window split & size shortcuts
 " ----------------------------------------------
 
@@ -419,19 +340,13 @@ map <C-l> <C-w>l
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 
-let g:yankstack_map_keys = 0
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
-
 
 " ----------------------------------------------
 " Map Uncommon Filetype for Syntax Highlighting
 " ----------------------------------------------
 
 au BufRead,BufNewFile *.scss set filetype=scss.css
-au BufRead,BufNewFile *.jade.html set filetype=jade
 au BufRead,BufNewFile *.palette set filetype=ruby
-au BufNewFile,BufRead *.hl7 set filetype=hl7
 
 
 " ----------------------------------------------
@@ -465,16 +380,10 @@ autocmd FileType ruby nmap <buffer> <Leader>x <Plug>(xmpfilter-run)
 autocmd FileType ruby xmap <buffer> <Leader>x <Plug>(xmpfilter-run)
 autocmd FileType ruby imap <buffer> <Leader>x <Plug>(xmpfilter-run)
 
-" Extend % to do/end etc
-runtime! plugin/matchit.vim
-
 " Fix supertab/endwise incompatibility
 let g:SuperTabCrMapping = 0
 
 " HTML & XML -------------------------------------
-" Don't report Angular ng-* attributes as errors in HTML
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
 " Enable ragtag XML tag mappings
 let g:ragtag_global_maps = 1
 
@@ -549,7 +458,7 @@ let g:startify_custom_header = [
 
 let g:startify_custom_footer = [
       \'',
-      \"   Adam's Vim Config: https://github.com/adamwhittingham/vim-config",
+      \"   Rob's Stolen Vim Config: https://github.com/iexus/vim-config",
       \"   Vim is charityware. Please read ':help uganda'",
       \]
 
@@ -825,18 +734,6 @@ call s:DefineCommand("cd", "ChangeDirectory")
 call s:DefineCommand("touch", "Touch")
 call s:DefineCommand("rm", "Remove")
 
-
-" ----------------------------------------------
-" Setup filetype specific settings
-" ----------------------------------------------
-
-" Enable spell-check & wrapping when editing text documents (eg Markdown)
-autocmd BufNewFile,BufRead *.md :setlocal wrap
-autocmd BufNewFile,BufRead *.md :setlocal spell
-
-" Ignore blank lines when calculating indentaiton on ansible yml configs
-let g:ansible_options = {'ignore_blank_lines': 0}
-
 let g:javascript_enable_domhtmlcss = 1
 
 " ----------------------------------------------
@@ -880,27 +777,12 @@ autocmd FileType ruby imap <buffer> <Leader>x <Plug>(xmpfilter-run)
 " Disable Markdown folding
 let g:vim_markdown_folding_disabled=1
 
-" Don't report Angular ng-* attributes as errors in HTML
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
-" Projectionist defaults
-let g:projectionist_heuristics ={
-      \  "spec/*.rb": {
-      \     "app/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
-      \     "lib/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
-      \     "spec/*_spec.rb": {"alternate": ["app/{}.rb","lib/{}.rb"], "type": "test"}
-      \  }
-      \}
-
 " Show current line highlighting only in the active pane
 augroup BgHighlight
   autocmd!
   autocmd WinEnter * set cul
   autocmd WinLeave * set nocul
 augroup END
-
-" Enable ragtag XML tag mappings
-let g:ragtag_global_maps = 1
 
 
 " ----------------------------------------------
@@ -941,26 +823,6 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-
-"define :Lorem command to dump in a paragraph of lorem ipsum
-command! -nargs=0 Lorem :normal iLorem ipsum dolor sit amet, consectetur
-      \ adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      \ magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-      \ ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-      \ irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      \ fugiat nulla pariatur.  Excepteur sint occaecat cupidatat non
-      \ proident, sunt in culpa qui officia deserunt mollit anim id est
-      \ laborum
-
-"define :Hipster command to dump in a paragraph of Hipster ipsum
-command! -nargs=0 Hipster :normal iTrust fund fashion axe bitters art party
-      \ raw denim. XOXO distillery tofu, letterpress cred literally gluten-free
-      \ flexitarian fap. VHS fashion axe gluten-free 90's church-key, kogi
-      \ hashtag Marfa. Kogi Tumblr Brooklyn chambray. Flannel pickled YOLO
-      \ semiotics. Mlkshk keffiyeh narwhal, mumblecore gentrify raw denim food
-      \ truck DIY. Craft beer chia readymade ethnic, hella kogi Vice jean shorts
-      \ cliche cray mlkshk ugh cornhole kitsch quinoa
-
 
 " ----------------------------------------------
 "  Source any local config
