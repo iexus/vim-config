@@ -10,7 +10,7 @@ Plug 'AdamWhittingham/projector_mode'                         " Toggle between c
 Plug 'airblade/vim-gitgutter'                                 " Show the column of changes to the file against git
 Plug 'vim-airline/vim-airline'                                " Add a nicer status line
 Plug 'vim-airline/vim-airline-themes'                         " Themes for Airline
-Plug 'lilydjwg/colorizer'                                              " Show the colour off Hex colour codes
+Plug 'lilydjwg/colorizer'
 Plug 'mhinz/vim-startify'                                     " Start Vim with a more useful start screen
 
 " Search and file exploring
@@ -34,7 +34,7 @@ Plug 'tpope/vim-speeddating'                                  " Extend vim incre
 Plug 'tpope/vim-surround'                                     " Quick editing or insertion for surrounding characters (ie. quickly add quotes around a line)
 
 " Snippets and autocomplete
-Plug 'tpope/vim-endwise'                                      " Automatically insert programming block endings (ie. `end` in Ruby, `endif` in VimL)
+Plug 'tpope/vim-endwise', {'for': 'ruby'}                     " Automatically insert programming block endings (ie. `end` in Ruby, `endif` in VimL)
 Plug 'tpope/vim-ragtag'                                       " Provide bindings for closing HTML/XML tags
 Plug 'ajh17/VimCompletesMe'                                   " Very lightweight completion helper
 
@@ -49,7 +49,6 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}        " Extend % to matc
 
 " JS, CSS & HTML
 Plug 'cakebaker/scss-syntax.vim'                              " SCSS syntax highlighting
-Plug 'adamwhittingham/vim-comb',       {'do': './install.sh'} " Organise and format CSS selectors like a proper human
 
 " Load any extra plugins specified in the home directory
 if filereadable(expand("~/.vim.plugins.local"))
@@ -602,7 +601,6 @@ let g:syntastic_auto_loc_list=1
 if executable('eslint')
   let g:syntastic_javascript_checkers = ['eslint']
 endif
-
 
 " ----------------------------------------------
 " Setup ctags
