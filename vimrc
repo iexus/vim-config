@@ -41,15 +41,11 @@ Plug 'ajh17/VimCompletesMe'                                   " Very lightweight
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
 Plug 'sheerun/vim-polyglot'                                   " Currated group of other excellent plugins
-Plug 'elixir-editors/vim-elixir'
 
 " Ruby
 Plug 'tpope/vim-rbenv'                                        " Use rbenv for Ruby tools
 Plug 'ecomba/vim-ruby-refactoring',    {'for': 'ruby'}        " Extra Ruby refactoring tools
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}        " Extend % to match Ruby syntax
-
-" Elixir
-Plug 'avdgaag/vim-phoenix',            {'for': 'elixir'}      " Add Projectionist, Dispatch and Mix integrations for Phoenix projects
 
 " JS, CSS & HTML
 Plug 'cakebaker/scss-syntax.vim'                              " SCSS syntax highlighting
@@ -361,10 +357,6 @@ let g:colorizer_auto_filetype='css,haml,html,less,scss,vim'
 autocmd BufNewFile,BufRead *.md :setlocal wrap
 autocmd BufNewFile,BufRead *.md :setlocal spell
 let g:vim_markdown_folding_disabled=1
-
-" YAML -------------------------------------
-" Ignore blank lines when calculating indentaiton on ansible yml configs
-let g:ansible_options = {'ignore_blank_lines': 0}
 
 " MAKE -------------------------------------
 " Leave tabs as tabs in Makefiles
