@@ -109,24 +109,6 @@ set wildmode=list:longest               " Shell-like behaviour for command autoc
 set fillchars+=vert:\                   " Set the window borders to not have | chars in them
 set nojoinspaces                        " Use only 1 space after "." when joining lines instead of 2
 
-
-" Display soft column limit in modern versions of vim
-if version >= 730
-  au WinEnter,FileType * set cc=
-  au WinEnter,FileType ruby,eruby,rspec,cucumber set cc=140
-endif
-
-" Show lines which have been break-indented with a special character
-if v:version > 704 || v:version == 704 && has("patch338")
-  set breakindent
-  set showbreak=↪
-endif
-
-" Delete comment character when joining commented lines
- if v:version > 703 || v:version == 703 && has("patch541")
-   set formatoptions+=j
- endif
-
 " -----------------------------------
 " Setup file wildcard ignored names
 " -----------------------------------
@@ -200,6 +182,13 @@ match BadSpaces / \+/
 " ----------------------------------------------
 " Command Shortcuts
 " ----------------------------------------------
+
+" Jump to next error with Ctrl-n and previous error with Ctrl-m. Close the
+" quickfix window with <leader>a
+
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
 
 " Disable Ex Mode to remove confusion
 nnoremap Q <Nop>
@@ -287,16 +276,6 @@ if has("gui_running")
   imap <C-s> <esc>:w<CR>
 endif
 
-" Replace the default U (undo last line) to Redo for speedyness
-nmap U <c-r>
-
-" F5 to reload doc
-map <silent> <F5> <esc>:e %<CR>
-
-" F6 to view the Vim style of the text under the cursor
-nmap <F6> :call VimSyntaxGroups()<CR>
-
-
 " ----------------------------------------------
 " Window split & size shortcuts
 " ----------------------------------------------
@@ -347,6 +326,71 @@ let g:SuperTabCrMapping = 0
 " Enable ragtag XML tag mappings
 let g:ragtag_global_maps = 1
 
+" ----------------------------------------------
+" Setup vim-go and bindings
+" ----------------------------------------------
+
+let g:go_fmt_command = "goimports"
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
+
+augroup go
+  autocmd!
+
+  " Show by default 4 spaces for a tab
+  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+
+  " :GoBuild and :GoTestCompile
+  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+
+  " :GoTest
+  autocmd FileType go nmap <leader>t  <Plug>(go-test)
+
+  " :GoRun
+  autocmd FileType go nmap <leader>r  <Plug>(go-run)
+
+  " :GoDoc
+  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
+
+  " :GoCoverageToggle
+  autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+
+  " :GoInfo
+  autocmd FileType go nmap <Leader>i <Plug>(go-info)
+
+  " :GoMetaLinter
+  autocmd FileType go nmap <Leader>l <Plug>(go-metalinter)
+
+  " :GoDef but opens in a vertical split
+  autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
+  " :GoDef but opens in a horizontal split
+  autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
+
+  " :GoAlternate  commands :A, :AV, :AS and :AT
+  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+augroup END
+
+" build_go_files is a custom function that builds or compiles the test file.
+" It calls :GoBuild if its a Go file, or :GoTestCompile if it's a test file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
 
 " ----------------------------------------------
 " Auto-complete shortcuts
@@ -364,11 +408,6 @@ autocmd FileType c setlocal omnifunc=ccomplete#CompleteCpp
 " Setup autocompletion lookups for VimCompletesMe
 autocmd FileType text,markdown let b:vcm_tab_complete = 'dict'
 autocmd FileType ruby,elixir let b:vcm_tab_complete = 'tags'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<C-j>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 
 " ----------------------------------------------
@@ -535,7 +574,7 @@ endif
 " ----------------------------------------------
 
 " Tell Gutentags to store tags in .tags by default
-let g:gutentags_tagfile = '.tags'
+let g:gutentags_ctags_tagfile = '.tags'
 
 " ----------------------------------------------
 " Setup NERDCommenter
