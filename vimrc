@@ -47,6 +47,9 @@ Plug 'tpope/vim-rbenv'                                        " Use rbenv for Ru
 Plug 'ecomba/vim-ruby-refactoring',    {'for': 'ruby'}        " Extra Ruby refactoring tools
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}        " Extend % to match Ruby syntax
 
+" Go
+Plug 'fatih/vim-go'
+
 " JS, CSS & HTML
 Plug 'cakebaker/scss-syntax.vim'                              " SCSS syntax highlighting
 
