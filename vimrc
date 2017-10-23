@@ -215,15 +215,6 @@ nmap <silent> <unique> <Leader>. :BufExplorer<CR>
 " Double leader to switch to the previous buffer
 map <silent> <Leader><Leader> :b#<CR>
 
-" <leader>a<?> to align visually selected lines on <something>
-vnoremap <silent> <Leader>a= :Tabularize /=<CR>
-vnoremap <silent> <Leader>a=> :Tabularize /=>/l1c1r1<CR>
-vnoremap <silent> <Leader>a, :Tabularize /,\@<=/l0r1<CR>
-vnoremap <silent> <Leader>a{ :Tabularize /{<CR>
-vnoremap <silent> <Leader>a\| :Tabularize /\|<CR>
-vnoremap <silent> <Leader>a: :Tabularize /\w:\zs/l0l1<CR>
-vnoremap <silent> <Leader>a<space> :Tabularize /[^ ] \+\zs/l0r1<CR>
-
 "  <Leader>f to fuzzy search files
 map <silent> <leader>f :CtrlP<cr>
 
@@ -275,9 +266,6 @@ nmap <silent> <Leader>sp :setlocal spell!<CR>
 "  <Leader>sw to strip whitespace off the ends
 nmap <silent> <Leader>sw :call StripTrailingWhitespace()<CR>
 
-" Replace the default U (undo last line) to Redo for speedyness
-nmap U <c-r>
-
 " Add :w!! to save the current file with sudo
 cmap w!! w !sudo tee > /dev/null %
 
@@ -299,8 +287,6 @@ endif
 " Replace the default U (undo last line) to Redo for speedyness
 nmap U <c-r>
 
-nmap <leader>* :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
 " F5 to reload doc
 map <silent> <F5> <esc>:e %<CR>
 
@@ -316,16 +302,6 @@ nmap <F6> :call VimSyntaxGroups()<CR>
 map <leader>w <c-w>w
 map <leader>ws :vsplit<CR>
 map <leader>wS :split<CR>
-nnoremap <silent> <Leader>w+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>w- :exe "resize " . (winheight(0) * 2/3)<CR>
-nnoremap <silent> <Leader>w> :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
-nnoremap <silent> <Leader>w< :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
-
-" C-w s to vertical split
-map <C-w>s :vsplit<CR>
-
-" C-w S to horizontal split
-map <C-w>S :split<CR>
 
 " C-H and C-L to jump left and right between splits
 map <C-h> <C-w>h
@@ -360,16 +336,6 @@ let g:vim_markdown_folding_disabled=1
 " MAKE -------------------------------------
 " Leave tabs as tabs in Makefiles
 autocmd FileType make set noexpandtab
-
-" RUBY -------------------------------------
-" xmp-filter mappings
-autocmd FileType ruby nmap <buffer> <Leader>X <Plug>(xmpfilter-mark)
-autocmd FileType ruby xmap <buffer> <Leader>X <Plug>(xmpfilter-mark)
-autocmd FileType ruby imap <buffer> <Leader>X <Plug>(xmpfilter-mark)
-
-autocmd FileType ruby nmap <buffer> <Leader>x <Plug>(xmpfilter-run)
-autocmd FileType ruby xmap <buffer> <Leader>x <Plug>(xmpfilter-run)
-autocmd FileType ruby imap <buffer> <Leader>x <Plug>(xmpfilter-run)
 
 " Fix supertab/endwise incompatibility
 let g:SuperTabCrMapping = 0
@@ -411,23 +377,6 @@ nmap <leader>cP :CopyAbsolutePath<CR>
 nmap <leader>cf :CopyFileName<CR>
 nmap <leader>cd :CopyDirectoryPath<CR>
 nmap <leader>cr :CopyRelativePathAndLine<CR>
-
-
-" ----------------------------------------------
-" Toggle line numbers between absolute and relative
-" ----------------------------------------------
-
-" Setup relative number toggle on Ctrl+n
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set norelativenumber
-  else
-    set relativenumber
-  endif
-  set number
-endfunc
-
-nnoremap <C-n> :call NumberToggle()<cr>
 
 
 " ----------------------------------------------
@@ -490,7 +439,6 @@ if executable('ag')
 endif
 
 
-
 " ----------------------------------------------
 " Setup SplitJoin
 " ----------------------------------------------
@@ -498,29 +446,6 @@ endif
 " Attempt alignment of keys when splitting a hash
 let g:splitjoin_align = 1
 
-
-" ----------------------------------------------
-" Configure GitGutter
-" ----------------------------------------------
-" Set the git gutter colors to be the same as the number column
-hi clear SignColumn
-
-" Set the Gutter to show all the time, avoiding the column 'pop' when saving
-set signcolumn=yes
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-let g:gitgutter_sign_modified_removed = '~'
-let g:gitgutter_max_signs = 1000
-
-
-" ----------------------------------------------
-" Configure Testing tools
-" ----------------------------------------------
-
-if !empty($TMUX)
-  let test#strategy = "dispatch"
-end
 
 " ----------------------------------------------
 " Configure Rainbow Parentheses
@@ -750,22 +675,9 @@ let g:vroom_write_all = 1
 let g:vroom_cucumber_path = 'cucumber '
 let g:vroom_map_keys = 0
 
-
-" ----------------------------------------------
-" Configure dynamic code execution tools
-" ----------------------------------------------
-
-" xmp-filter mappings
-autocmd FileType ruby nmap <buffer> <Leader>X <Plug>(xmpfilter-mark)
-autocmd FileType ruby xmap <buffer> <Leader>X <Plug>(xmpfilter-mark)
-autocmd FileType ruby imap <buffer> <Leader>X <Plug>(xmpfilter-mark)
-
-autocmd FileType ruby nmap <buffer> <Leader>x <Plug>(xmpfilter-run)
-autocmd FileType ruby xmap <buffer> <Leader>x <Plug>(xmpfilter-run)
-autocmd FileType ruby imap <buffer> <Leader>x <Plug>(xmpfilter-run)
-
-" Disable Markdown folding
-let g:vim_markdown_folding_disabled=1
+if !empty($TMUX)
+  let test#strategy = "dispatch"
+end
 
 " Show current line highlighting only in the active pane
 augroup BgHighlight
