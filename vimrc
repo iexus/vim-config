@@ -45,7 +45,6 @@ Plug 'sheerun/vim-polyglot'                                   " Currated group o
 " Ruby
 Plug 'tpope/vim-rbenv'                                        " Use rbenv for Ruby tools
 Plug 'ecomba/vim-ruby-refactoring',    {'for': 'ruby'}        " Extra Ruby refactoring tools
-Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}        " Extend % to match Ruby syntax
 
 " Go
 Plug 'fatih/vim-go'
@@ -332,7 +331,7 @@ let g:ragtag_global_maps = 1
 
 let g:go_fmt_command = "goimports"
 let g:go_autodetect_gopath = 1
-let g:go_list_type = "quickfix"
+" let g:go_list_type = "quickfix"
 
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
@@ -374,10 +373,10 @@ augroup go
   autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
 
   " :GoAlternate  commands :A, :AV, :AS and :AT
-  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+  autocmd Filetype go command! -bang G call go#alternate#Switch(<bang>0, 'edit')
+  autocmd Filetype go command! -bang GV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang GS call go#alternate#Switch(<bang>0, 'split')
+  autocmd Filetype go command! -bang GT call go#alternate#Switch(<bang>0, 'tabe')
 augroup END
 
 " build_go_files is a custom function that builds or compiles the test file.
