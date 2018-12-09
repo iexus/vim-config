@@ -16,11 +16,12 @@ Plug 'rking/ag.vim'                                           " Really fast sear
 Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
 Plug 'scrooloose/nerdcommenter'                               " Handy commenting!
 Plug 'ludovicchabant/vim-gutentags'                           " Better automated generation and update of ctags files
+Plug 'tpope/vim-projectionist'                                " Map tools and actions based on the project
 
 " Snippets and autocomplete
 Plug 'tpope/vim-endwise', {'for': 'ruby'}                     " Automatically insert programming block endings (ie. `end` in Ruby, `endif` in VimL)
 Plug 'tpope/vim-ragtag'                                       " Provide bindings for closing HTML/XML tags
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
@@ -30,7 +31,6 @@ Plug 'sheerun/vim-polyglot'                                   " Currated group o
 Plug 'fatih/vim-go'
 
 " Plug 'ajh17/VimCompletesMe'                                   " Very lightweight completion helper
-" Plug 'tpope/vim-projectionist'                                " Map tools and actions based on the project
 " Plug 'andyl/vim-projectionist-elixir'
 " Plug 'gregsexton/MatchTag'                                    " Highlight the matching opening or closing tag in HTML/XML
 " Plug 'AdamWhittingham/projector_mode'                         " Toggle between colourschemes for work & projection or screensharing
@@ -110,6 +110,9 @@ set cursorline                          " Hilight the line the cursor is on
 set background=dark
 set nofoldenable                        " Disable all folding of content
 set nojoinspaces                        " Use only 1 space after "." when joining lines instead of 2
+
+set history=1000                        " Remember a decent way back
+set spelllang=en_gb
 
 map <ScrollWheelLeft> <nop>
 map <S-ScrollWheelLeft> <nop>
@@ -329,14 +332,14 @@ endif
 " Configure dynamic code execution tools
 " ----------------------------------------------
 
-" " Projectionist defaults
-" let g:projectionist_heuristics ={
-"       \  "spec/*.rb": {
-"       \     "app/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
-"       \     "lib/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
-"       \     "spec/*_spec.rb": {"alternate": ["app/{}.rb","lib/{}.rb"], "type": "test"}
-"       \  }
-"       \}
+" Projectionist defaults
+let g:projectionist_heuristics ={
+      \  "spec/*.rb": {
+      \     "app/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
+      \     "lib/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
+      \     "spec/*_spec.rb": {"alternate": ["app/{}.rb","lib/{}.rb"], "type": "test"}
+      \  }
+      \}
 
 " ----------------------------------------------
 " Configure Buffer Explorer
@@ -410,11 +413,9 @@ endfunction
 " set autowrite                           " Writes on make/shell commands
 " set cf                                  " Enable error files & error jumping.
 " set complete+=kspell
-" set history=1000                        " Remember a decent way back
 " set listchars=nbsp:█,eol:¶,tab:>-,extends:»,precedes:«,trail:•
 " set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
 " set shortmess+=A
-" set spelllang=en_gb
 " set timeoutlen=500                      " Milliseconds to wait for another key press when evaluating commands
 " set wildmode=list:longest               " Shell-like behaviour for command autocompletion
 " set fillchars+=vert:\                   " Set the window borders to not have | chars in them
