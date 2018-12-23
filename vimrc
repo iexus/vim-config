@@ -21,7 +21,8 @@ Plug 'tpope/vim-projectionist'                                " Map tools and ac
 " Snippets and autocomplete
 Plug 'tpope/vim-endwise', {'for': 'ruby'}                     " Automatically insert programming block endings (ie. `end` in Ruby, `endif` in VimL)
 Plug 'tpope/vim-ragtag'                                       " Provide bindings for closing HTML/XML tags
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'ajh17/VimCompletesMe'                                   " Very lightweight completion helper
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
@@ -30,7 +31,6 @@ Plug 'sheerun/vim-polyglot'                                   " Currated group o
 " Go
 Plug 'fatih/vim-go'
 
-" Plug 'ajh17/VimCompletesMe'                                   " Very lightweight completion helper
 " Plug 'andyl/vim-projectionist-elixir'
 " Plug 'gregsexton/MatchTag'                                    " Highlight the matching opening or closing tag in HTML/XML
 " Plug 'AdamWhittingham/projector_mode'                         " Toggle between colourschemes for work & projection or screensharing
@@ -139,6 +139,21 @@ set wildignore+=*/tmp/cache/*                                                " I
 set wildignore+=node_modules/*                                               " Ignore node modules
 set wildignore+=*.swp,*.swo,*~,._*                                           " Disable temp and backup files
 set wildignore+=_build/*                                                     " Ignore elixirs build folder
+
+
+" Enable omni completion.
+autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType c setlocal omnifunc=ccomplete#CompleteCpp
+
+" Setup autocompletion lookups for VimCompletesMe
+autocmd FileType text,markdown let b:vcm_tab_complete = 'dict'
+autocmd FileType ruby,elixir let b:vcm_tab_complete = 'tags'
+
 
 " -----------------------------------
 " GUI Vim Options
@@ -542,19 +557,6 @@ endfunction
 " " ----------------------------------------------
 " " Auto-complete shortcuts
 " " ----------------------------------------------
-
-" " Enable omni completion.
-" autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" autocmd FileType c setlocal omnifunc=ccomplete#CompleteCpp
-
-" " Setup autocompletion lookups for VimCompletesMe
-" autocmd FileType text,markdown let b:vcm_tab_complete = 'dict'
-" autocmd FileType ruby,elixir let b:vcm_tab_complete = 'tags'
 
 
 " " ----------------------------------------------
