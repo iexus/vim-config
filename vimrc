@@ -147,8 +147,6 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType c setlocal omnifunc=ccomplete#CompleteCpp
 
 " Setup autocompletion lookups for VimCompletesMe
 autocmd FileType text,markdown let b:vcm_tab_complete = 'dict'
@@ -409,16 +407,22 @@ endfunction
 " endfunc
 "
 "
-" " ----------------------------------------------
-" " Setup Syntastic
-" " ----------------------------------------------
-" let g:syntastic_enable_signs=1
-" let g:syntastic_auto_loc_list=1
-" let g:syntastic_always_populate_loc_list=1
+" ----------------------------------------------
+" Setup Syntastic
+" ----------------------------------------------
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_always_populate_loc_list=1
 
-" let g:syntastic_python_checker = ['flake8']
-" let g:syntastic_python_flake8_args = '--ignore=E,W,F403,F401'
-" let g:syntastic_python_python_exec = '~/.pyenv/shims/python3'
+let g:syntastic_python_checker = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore=E,W,F403,F401'
+let g:syntastic_python_python_exec = '~/.pyenv/shims/python3'
+
+
+" ----------------------------------------------
+" Disable unhelpful polyglot plugins
+" ----------------------------------------------
+let g:polyglot_disabled = ['csv']
 
 " if executable('eslint')
 "   let g:syntastic_javascript_checkers = ['eslint']
