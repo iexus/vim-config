@@ -84,6 +84,7 @@ set smarttab                            " tabs depend on the width set
 set expandtab                           " Convert tabs to spaces
 set shiftround
 set nowrap                              " Line wrapping off
+set formatoptions-=t                    " do not automatically wrap text when typing
 set scrolloff=3                         " More context around cursor
 set tabstop=2                           " Number of spaces a tab is
 set softtabstop=2                       " Number of spaces a tab is while editing
@@ -146,7 +147,7 @@ autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=python3complete#Complete
 
 " Setup autocompletion lookups for VimCompletesMe
 autocmd FileType text,markdown let b:vcm_tab_complete = 'dict'
@@ -201,7 +202,8 @@ nmap <silent> <Leader>m :NERDTreeToggle<CR>
 map <silent> <Leader>M :NERDTreeFind<CR>
 
 "  <Leader>rt to run ctags on the current directory
-map <leader>rt :!ctags -R .<CR><CR>
+" map <leader>rt :!ctags -R .<CR><CR>
+map <leader>rt :GutentagsUpdate!<CR><CR>
 
 "  <Leader>sp to toggle spelling highlighting
 nmap <silent> <Leader>sp :setlocal spell!<CR>
@@ -415,8 +417,8 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
 
 let g:syntastic_python_checker = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore=E,W,F403,F401'
-let g:syntastic_python_python_exec = '~/.pyenv/shims/python3'
+let g:syntastic_python_flake8_args = '--max-line-length 120 --max-complexity 12'
+let g:syntastic_python_python_exec = '/usr/local/bin/python3'
 
 
 " ----------------------------------------------
