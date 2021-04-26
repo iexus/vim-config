@@ -9,14 +9,15 @@ Plug 'vim-airline/vim-airline'                                " Add a nicer stat
 Plug 'vim-airline/vim-airline-themes'                         " Themes for Airline
 Plug 'mhinz/vim-startify'                                     " Start Vim with a more useful start screen
 
-" " Search and file exploring
+" Search and file exploring
 Plug 'jlanzarotta/bufexplorer'                                " Show a sortable list of open buffers
-Plug 'ctrlpvim/ctrlp.vim'                                     " Really powerful fuzzy finder for file names
-Plug 'rking/ag.vim'                                           " Really fast search for text in all files
 Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
 Plug 'scrooloose/nerdcommenter'                               " Handy commenting!
 Plug 'ludovicchabant/vim-gutentags'                           " Better automated generation and update of ctags files
 Plug 'tpope/vim-projectionist'                                " Map tools and actions based on the project
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Snippets and autocomplete
 Plug 'tpope/vim-endwise', {'for': 'ruby'}                     " Automatically insert programming block endings (ie. `end` in Ruby, `endif` in VimL)
@@ -26,23 +27,28 @@ Plug 'ajh17/VimCompletesMe'                                   " Very lightweight
 
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
+let g:polyglot_disabled = ['csv'] " Disable unhelpful polyglot plugins
 Plug 'sheerun/vim-polyglot'                                   " Currated group of other excellent plugins
 
 " Go
 Plug 'fatih/vim-go'
 
-" Plug 'andyl/vim-projectionist-elixir'
-" Plug 'gregsexton/MatchTag'                                    " Highlight the matching opening or closing tag in HTML/XML
-" Plug 'AdamWhittingham/projector_mode'                         " Toggle between colourschemes for work & projection or screensharing
-" Plug 'lilydjwg/colorizer'
-" Plug 'tpope/vim-unimpaired'                                   " Extra bindings for common buffer navigation
+" Rust
+Plug 'rust-lang/rust.vim'
+
+" Javascript
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+
 " Plug 'timakro/vim-searchant'                                  " Better highlighting when searching in file
-" Plug 'tpope/vim-commentary'                                   " Quick toggle for code commenting
 " Plug 'tpope/vim-speeddating'                                  " Extend vim increment/decrement to work on dates
 " Plug 'tpope/vim-surround'                                     " Quick editing or insertion for surrounding characters (ie. quickly add quotes around a line)
-" Plug 'tpope/vim-rbenv'                                        " Use rbenv for Ruby tools
-" Plug 'ecomba/vim-ruby-refactoring',    {'for': 'ruby'}        " Extra Ruby refactoring tools
-" Plug 'cakebaker/scss-syntax.vim'                              " SCSS syntax highlighting
+
+
+" Language server support
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -169,6 +175,7 @@ nnoremap Q <Nop>
 command! W :w
 command! Q :q
 command! Qa :qa
+command! Wq :wq
 
 " <leader>. to view all document buffers
 nmap <silent> <unique> <Leader>. :BufExplorer<CR>
@@ -177,13 +184,14 @@ nmap <silent> <unique> <Leader>. :BufExplorer<CR>
 map <silent> <Leader><Leader> :b#<CR>
 
 "  <Leader>f to fuzzy search files
-map <silent> <leader>f :CtrlP<cr>
+" map <silent> <leader>f :CtrlP<cr>
+map <silent> <leader>f :GFiles<cr>
 
 "  <Leader>F to fuzzy search files in the same directory as the current file
-map <silent> <leader>F :CtrlPCurFile<cr>
+" map <silent> <leader>F :CtrlPCurFile<cr>
 
 "  <Leader>} to Search for a tag in the current project
-map <silent> <leader>} :CtrlPTag<cr>
+" map <silent> <leader>} :CtrlPTag<cr>
 
 "  <Leader>h to dismiss search result highlighting until next search or press of 'n'
 :noremap <silent> <leader>h :noh<CR>
@@ -210,7 +218,21 @@ nmap <silent> <Leader>sp :setlocal spell!<CR>
 nmap <silent> <Leader>sw :call StripTrailingWhitespace()<CR>
 
 " Add :w!! to save the current file with sudo
-cmap w!! w !sudo tee > /dev/null %
+" cmap w!! w !sudo tee > /dev/null %
+
+" Make some sensible mappings for copy paste.
+
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
+
+" ----------------------------------------------
+" Setup Javascript syntax highlighting to not get out of sync
+" Turns on when you enter buffer - off when you leave
+" ----------------------------------------------
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 " ----------------------------------------------
 " Setup vim-go and bindings
@@ -331,15 +353,15 @@ autocmd User Startified setlocal buftype=
 " Setup CtrlP File Finder
 " ----------------------------------------------
 
-let g:ctrlp_show_hidden = 1
+" let g:ctrlp_show_hidden = 1
 
-" Use Ag for search if its available on this system
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
-  set grepformat=%f:%l:%c:%m,%f:%l:%m
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
+" " Use Ag for search if its available on this system
+" if executable('ag')
+"   set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
+"   set grepformat=%f:%l:%c:%m,%f:%l:%m
+"   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"   let g:ctrlp_use_caching = 0
+" endif
 
 " ----------------------------------------------
 " Configure dynamic code execution tools
@@ -391,44 +413,33 @@ function! StripTrailingWhitespace()
   normal `z
 endfunction
 
-" " Display Vim syntax groups under the cursor
-" function! VimSyntaxGroups()
-"   for id in synstack(line("."), col("."))
-"     echo synIDattr(id, "name")
-"   endfor
-" endfunction
+" " ----------------------------------------------
+" " Setup Syntastic
+" " ----------------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-" " Add function for showing the syntax tag for the selected text
-" function! <SID>SynStack()
-"   if !exists("*synstack")
-"     return
-"   endif
-"   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-" endfunc
-"
-"
-" ----------------------------------------------
-" Setup Syntastic
-" ----------------------------------------------
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_always_populate_loc_list=1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
+" let g:syntastic_enable_signs=1
+" let g:syntastic_auto_loc_list=1
+" let g:syntastic_always_populate_loc_list=1
 
 let g:syntastic_python_checker = ['flake8']
 let g:syntastic_python_flake8_args = '--ignore=E,W,F403,F401'
 let g:syntastic_python_python_exec = '~/.pyenv/shims/python3'
 
 
-" ----------------------------------------------
-" Disable unhelpful polyglot plugins
-" ----------------------------------------------
-let g:polyglot_disabled = ['csv']
 
 " if executable('eslint')
 "   let g:syntastic_javascript_checkers = ['eslint']
 " endif
 
-" set backupdir=/var/tmp,~/.tmp,.         " Don't clutter project dirs up with swap files
+set backupdir=/var/tmp,~/.tmp,.         " Don't clutter project dirs up with swap files
 " set autowrite                           " Writes on make/shell commands
 " set cf                                  " Enable error files & error jumping.
 " set complete+=kspell
@@ -456,12 +467,12 @@ let g:polyglot_disabled = ['csv']
 
 
 " " Highlight trailing whitespace
-" highlight RedundantSpaces term=standout ctermbg=red guibg=red
-" match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+highlight RedundantSpaces term=standout ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 
 " " Highlight Non-breaking spaces
-" highlight BadSpaces term=standout ctermbg=red guibg=red
-" match BadSpaces / \+/
+highlight BadSpaces term=standout ctermbg=red guibg=red
+match BadSpaces / \+/
 
 " " ----------------------------------------------
 " " Command Shortcuts
@@ -680,15 +691,15 @@ let g:polyglot_disabled = ['csv']
 " " Configure GitGutter
 " " ----------------------------------------------
 " " Set the git gutter colors to be the same as the number column
-" hi clear SignColumn
+hi clear SignColumn
 
 " " Set the Gutter to show all the time, avoiding the column 'pop' when saving
-" set signcolumn=yes
-" let g:gitgutter_sign_added = '+'
-" let g:gitgutter_sign_modified = '~'
-" let g:gitgutter_sign_removed = '-'
-" let g:gitgutter_sign_modified_removed = '~'
-" let g:gitgutter_max_signs = 1000
+set signcolumn=yes
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_modified_removed = '~'
+let g:gitgutter_max_signs = 1000
 
 
 " " ----------------------------------------------
